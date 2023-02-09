@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- app info -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ImagExplorer</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- styling -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+  </head>
+
+  <body>
+    <div id="content">
+      <div id="top-bar">
+        <h1>Imag<span>Explorer</span></h1>
+        <div id="button-contain">
+          <button
+            id="download-all"
+            title="download all"
+            onclick="download_all()"
+          >
+            download all
+          </button>
+          <!-- <button
+            id="email-imgs"
+            title="share with writer"
+            onclick="email_writer()"
+          >
+            share with writer
+          </button> -->
+        </div>
+      </div>
+      <div id="content-wrapper" class="">
+        <div id="left">
+          <div id="story">
+            <label class="first">text to illustrate:</label>
+            <div class="req" id="text-req">
+              a photo of an astronaut riding a horse on mars, digital illustration
+            </div>
+            <label>writer wants to depict:</label>
+            <div class="req" id="cont-req">a shinning light over the sky</div>
+            <label>writer's style preferences:</label>
+            <div class="req" id="style-req">
+              vivid colors, digital illustration
+            </div>
+          </div>
+          <form id="gen-image-form" action="/update" method="POST">
+            <!-- enter prompt to generate new images -->
+            <div class="label-contain">
+              <label for="prompt">Enter prompt:</label>
+              <div id="prompt-suggest" title="suggest prompt" class="suggest">
+                suggest prompt
+              </div>
+            </div>
+            <textarea
+              id="prompt"
+              name="prompt"
+              placeholder="example: a winter landscape, vector art"
+              title="enter prompt"
+              spellcheck="false"
+              style="margin-bottom: -5px"
+            >
+{% if prompt %}{{prompt}}{% endif %}</textarea
+            >
+            <div class="label-contain">
+              <label for="inspo">add starting image url:</label>
+              <div id="image-suggest" title="suggest image" class="suggest">
+                suggest image
+              </div>
+            </div>
+            <textarea
+              id="inspo"
+              name="inspo"
+              placeholder="example: https://my_awesome_image.png"
+              title="enter image url"
+              spellcheck="false"
+            >
+{% if start_url %}{{start_url}}{% endif %}</textarea
+            >
+            <input
+              id="lock"
+              name="lock"
+              type="text"
+              style="display: none"
+              value="{{locked}}"
+            />
+            <button id="submit" type="submit" title="submit">
+              generate images
+            </button>
+          </form>
+        </div>
+        <div id="right">
+          <!-- display generated images -->
+          <div id="img-grid">
+            {% for output in outputs %}
+            <div class="img-wrapper">
+              {% if locked[loop.index0] %}
+              <!-- locked -->
+              <i
+                class="fa lock-icon fa-lock locked"
+                aria-hidden="true"
+                title="lock/unlock image"
+              ></i>
+              {% else %}
+              <!-- unlocked -->
+              <i
+                class="fa lock-icon fa-unlock"
+                aria-hidden="true"
+                title="lock/unlock image"
+              ></i>
+              {% endif %}
+              <div class="palette">
+                <i
+                  title="copy color palette"
+                  class="fa fa-clipboard copy-icon"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              <img src="{{output}}" onload="get_palette(this)" />
+              <div id="img-icons">
+                <i
+                  title="download image"
+                  onclick="downloadImage(this)"
+                  class="fa fa-download download-icon"
+                  aria-hidden="true"
+                ></i>
+                <i
+                  title="copy image url"
+                  class="fa fa-link link-icon"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <p class="top-text">
+            <i>note: image generation may take ~1 min to complete</i>
+          </p>
+          <div id="tips">
+            <p>
+              <b>hover</b> over an image to view color palette + additional
+              actions
+            </p>
+            <div class="icon-key">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+              (un)lock image
+            </div>
+            <div class="icon-key">
+              <i class="fa fa-download" aria-hidden="true"></i>
+              download image
+            </div>
+            <div class="icon-key">
+              <i class="fa fa-link" aria-hidden="true"></i>
+              copy image url
+            </div>
+            <div class="icon-key">
+              <i class="fa fa-clipboard" aria-hidden="true"></i>
+              copy color palette
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>
