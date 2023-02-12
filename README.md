@@ -14,11 +14,11 @@ Artists are given the opportunity to view the original text and requests for ill
 
 The generated images are displayed in real-time on the right side of the screen, allowing artists to quickly and easily assess their results. If they are satisfied with what they see, they have the option to perform additional actions such as downloading or sharing the images with the writer.
 
-With ImagExplorer, writers and artists can enjoy a seamless and efficient collaboration process, bridging the gap between imagination and creation.
+With Imago, writers and artists can enjoy a seamless and efficient collaboration process, bridging the gap between imagination and creation.
 ## setup instructions
 1. clone repo
 ```
-git clone https://github.com/Diana-Barills/Image-Explorer
+git clone https://github.com/Diana-Barills/Imago
 ```
 
 2. create virtual env
