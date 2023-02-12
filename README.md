@@ -1,4 +1,4 @@
-# ImagExplorer
+# Imago
 Unleash Your Creativity with the AI-powered Brainstorm Buddy for Writer-Artist Collaboration
 
 Made with:
@@ -8,7 +8,7 @@ Made with:
 ## overview
 ![Screenshot](static/overview.png)
 
-ImagExplorer is an innovative tool designed to help writers and artists communicate better and streamline the brainstorming process for creating reference images. This tool leverages the advanced capabilities of Stable Diffusion, a cutting-edge text-to-image AI model.
+Imago is an innovative tool designed to help writers and artists communicate better and streamline the brainstorming process for creating reference images. This tool leverages the advanced capabilities of Stable Diffusion, a cutting-edge text-to-image AI model.
 
 Artists are given the opportunity to view the original text and requests for illustrations from the writer, and can generate reference images by utilizing the tool's intuitive interface. ImagExplorer goes a step further and provides helpful suggestions for prompts and starting images, to help artists get started with generating images using Stable Diffusion.
 
