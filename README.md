@@ -1,5 +1,5 @@
 # Imago
-Unleash Your Creativity with the AI-powered Brainstorm Buddy for Writer-Artist Collaboration
+Imago is a reference image brainstorming tool designed to facilitate communication between writers and artists. Powered by Stable Diffusion, a text-to-image AI model, Imago allows artists to view the original text and writer requests for illustrations while generating reference images. Additionally, Imago provides suggestions for prompts and starting images to feed into Stable Diffusion. The generated images are displayed on the right side of the interface, giving artists the opportunity to evaluate and adjust them according to their preferences. Artists can then perform actions such as downloading or sharing the images with the writer. Imago serves as an efficient tool for bridging the gap between writers and artists, enhancing collaboration and streamlining the creative process.
 
 Made with:
 * Stable Diffusion ([Replicate API](https://replicate.com/stability-ai/stable-diffusion/api))
